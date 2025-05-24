@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="light-theme">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Scanner</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="container">
+        <div class="logo-container">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CiAgICA8cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICA8cmVjdCB4PSIxMCIgeT0iMzAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0ibm9uZSIvPgogICAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiPgogICAgICAgIDxyZWN0IHg9IjE1IiB5PSIyMCIgd2lkdGg9IjUiIGhlaWdodD0iNjAiLz4KICAgICAgICA8cmVjdCB4PSIyNSIgeT0iMjAiIHdpZHRoPSI1IiBoZWlnaHQ9IjYwIi8+CiAgICAgICAgPHJlY3QgeD0iNDAiIHk9IjIwIiB3aWR0aD0iNSIgaGVpZ2h0PSI2MCIvPgogICAgICAgIDxyZWN0IHg9IjUwIiB5PSIyMCIgd2lkdGg9IjUiIGhlaWdodD0iNjAiLz4KICAgICAgICA8cmVjdCB4PSI2MCIgeT0iMjAiIHdpZHRoPSI1IiBoZWlnaHQ9IjYwIi8+CiAgICAgICAgPHJlY3QgeD0iNzAiIHk9IjIwIiB3aWR0aD0iNSIgaGVpZ2h0PSI2MCIvPgogICAgICAgIDxyZWN0IHg9IjgwIiB5PSIyMCIgd2lkdGg9IjUiIGhlaWdodD0iNjAiLz4KICAgIDwvZz4KICAgIDxyZWN0IHg9IjEwIiB5PSIzNSIgd2lkdGg9IjgwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjM2U1ODc5IiBvcGFjaXR5PSIwLjgiLz4KPC9zdmc+" alt="Barcode Scanner Logo" class="logo">
+          <h1>Inventory Scanner</h1>
+        </div>
+        <div style="display: flex; align-items: center;">
+          <div class="hamburger-menu" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <button id="theme-toggle" class="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Dark Mode</span>
+          </button>
+        <ul id="navbar-menu">
+            <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-page="create">Create Record</a></li>
+            <li><a href="#" class="nav-link" data-page="update">Update Record</a></li>
+            <li><a href="#" class="nav-link" data-page="view">View Records</a></li>
+            <li><a href="#" class="nav-link" data-page="delete">Delete Records</a></li>
+        </ul>
+        </div>
+      </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Pages Container -->
+    <div id="pages-container">
+      <!-- Home Page -->
+      <div id="home-page" class="page active">
+        <div class="container">
+          <h2>Scan Barcode</h2>
+          <div class="button-row">
+            <button id="start-scan" class="btn">Start Scanning</button>
+            <button id="stop-scan" class="btn" style="display: none;">Stop Camera</button>
+            <button id="upload-button" class="btn">Upload Image</button>
+          </div>
+          <div id="scanner" class="scanner-container"></div>
+          <div id="loader" class="loader" style="display: none;"></div>
+          <div id="result" class="result-container"></div>
+          <div id="barcode-actions" style="display: none;">
+            <button id="copy-barcode" class="btn">Copy to Clipboard</button>
+          </div>
+          <input type="file" id="upload-image" accept="image/*" style="display: none" />
+        </div>
+      </div>
+
+      <!-- Create Record Page -->
+      <div id="create-page" class="page">
+        <div class="container">
+          <h2>Create New Record</h2>
+          <div class="button-row">
+            <button id="create-scan" class="btn">Scan Barcode</button>
+            <button id="create-stop-scan" class="btn" style="display: none;">Stop Camera</button>
+            <button id="create-upload" class="btn">Upload Image</button>
+            <button id="manual-entry" class="btn">Manual Entry</button>
+          </div>
+          <div id="create-scanner" class="scanner-container"></div>
+          <div id="create-loader" class="loader" style="display: none;"></div>
+          <div id="create-result" class="result-container"></div>
+          <input type="file" id="create-upload-image" accept="image/*" style="display: none" />
+          
+          <form id="create-form" class="data-form">
+            <div class="form-group">
+              <label for="item-name">Item Name:</label>
+              <input type="text" id="item-name" name="item-name" placeholder="Enter item name" required>
+            </div>
+            <div class="form-group">
+              <label for="barcode">Barcode:</label>
+              <input type="text" id="barcode" name="barcode" placeholder="Enter barcode (e.g., STAC F1212)" required>
+            </div>
+            <div class="form-group">
+              <label for="item_condition">Condition:</label>
+              <textarea id="item_condition" name="item_condition" placeholder="Enter item condition" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="location">Location:</label>
+              <input type="text" id="location" name="location" placeholder="Enter storage location" required>
+            </div>
+            <button type="submit" id="save-record" class="btn btn-primary">Save Record</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Update Record Page -->
+      <div id="update-page" class="page">
+        <div class="container">
+          <h2>Update Record</h2>
+          <div class="button-row">
+            <button id="update-scan" class="btn">Scan Barcode</button>
+            <button id="update-stop-scan" class="btn" style="display: none;">Stop Camera</button>
+            <button id="update-upload" class="btn">Upload Image</button>
+          </div>
+          <div class="search-container">
+            <input type="text" id="update-search" placeholder="Search by barcode or item name...">
+            <button id="search-update-btn" class="btn">Search</button>
+          </div>
+          <div id="update-scanner" class="scanner-container"></div>
+          <div id="update-loader" class="loader" style="display: none;"></div>
+          <div id="update-result" class="result-container"></div>
+          <div id="search-results" class="records-container"></div>
+          <input type="file" id="update-upload-image" accept="image/*" style="display: none" />
+          
+          <form id="update-form" class="data-form" style="display: none;">
+            <div class="form-group">
+              <label for="update-item-name">Item Name:</label>
+              <input type="text" id="update-item-name" name="update-item-name" required>
+            </div>
+            <div class="form-group">
+              <label for="update-barcode">Barcode:</label>
+              <input type="text" id="update-barcode" name="update-barcode" readonly>
+            </div>
+            <div class="form-group">
+              <label for="update-item_condition">Condition:</label>
+              <textarea id="update-item_condition" name="update-item_condition" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="update-location">Location:</label>
+              <input type="text" id="update-location" name="update-location" required>
+            </div>
+            <button type="submit" id="update-record-btn" class="btn btn-primary">Update Record</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- View Records Page -->
+      <div id="view-page" class="page">
+        <div class="container">
+          <h2>View Records</h2>
+          <div class="search-container">
+            <input type="text" id="search-records" placeholder="Search records...">
+          </div>
+          <div id="records-container" class="records-container"></div>
+        </div>
+      </div>
+
+      <!-- Delete Records Page -->
+      <div id="delete-page" class="page">
+        <div class="container">
+          <h2>Delete Records</h2>
+          <div class="search-container">
+            <input type="text" id="delete-search-records" placeholder="Search records to delete...">
+          </div>
+          <div class="button-row">
+            <button id="delete-selected" class="btn btn-danger" style="display: none;">Delete Selected</button>
+          </div>
+          <div id="delete-result" class="result-container"></div>
+          
+          <div id="delete-records-container" class="records-container">
+            <div class="records-list" id="delete-records-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
